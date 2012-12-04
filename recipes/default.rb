@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: stub
+# Cookbook Name:: stud
 # Recipe:: default
 #
 # Copyright (C) 2012 Lucas Jandrew
@@ -16,3 +16,55 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+package 'libev-dev'
+package 'libssl-dev'
+
+directory '/opt/stud/build' do
+  mode '0755'
+  owner 'root'
+  group 'root'
+  recursive true
+end
+
+directory '/etc/stud/certs' do
+  mode '0755'
+  owner 'root'
+  group 'root'
+  recursive true
+end
+
+directory '/etc/stud/configs-available' do
+  mode '0755'
+  owner 'root'
+  group 'root'
+end
+
+directory '/etc/stud/configs-enabled' do
+  mode '0755'
+  owner 'root'
+  group 'root'
+end
+
+user 'stud' do
+  system true
+end
+
+group 'stud' do
+  members ['stud']
+  system true
+end
+
+git '/opt/stud/build' do
+  repository 'https://github.com/bumptech/stud.git'
+  reference 'master'
+  action :sync
+end
+
+bash "build stud" do
+  cwd '/opt/stud/build'
+  code <<-EOH
+    make
+    make install
+    mv stud /opt/stud/
+  EOH
+end

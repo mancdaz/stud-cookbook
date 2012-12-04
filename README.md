@@ -1,4 +1,4 @@
-# stub cookbook
+# stud cookbook
 
 # Requirements
 

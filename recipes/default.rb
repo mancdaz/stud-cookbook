@@ -68,3 +68,8 @@ bash "build stud" do
     mv stud /opt/stud/
   EOH
 end
+
+stub_instance 'test' do
+  source_port 4043
+  destination_port 4040
+end

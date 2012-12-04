@@ -28,9 +28,20 @@ end
 
 def create_command
 
+  databag = Chef::EncryptedDataBagItem.load('stub', new_resource.config_name)
+
   if new_resource.exists('pem')
     pemContents = new_resource.pem
   else
+
+    unless new_resource.exists('key')
+      new_resource.key = databag['key']
+    end
+
+    unless new_resource.exists('certificate')
+      new_resource.certificate = databag['certificate']
+    end
+
     pemContents = "#{new_resource.certificate}\n#{new_resource.key}"
   end
 

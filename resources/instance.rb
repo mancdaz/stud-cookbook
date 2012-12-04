@@ -22,7 +22,7 @@ default_action :create
 attribute :config_name, :name_attribute => true
 attribute :enabled, :default => true
 attribute :source_port
-attribute :destination_hostname
+attribute :destination_hostname, :default => '127.0.0.1'
 attribute :destination_port
 attribute :key
 attribute :certificate

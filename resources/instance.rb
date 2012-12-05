@@ -19,6 +19,11 @@
 actions :create, :delete, :enable, :disable
 default_action :create
 
+def initialize(*args)
+  super
+  @action = :create
+end
+
 attribute :config_name, :name_attribute => true
 attribute :enabled, :default => true
 attribute :source_port

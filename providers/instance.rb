@@ -63,6 +63,7 @@ def action_create
   end
 
   template "/etc/stud/configs-available/#{new_resource.config_name}.conf" do
+    cookbook 'stud'
     owner 'root'
     group 'root'
     mode '0644'

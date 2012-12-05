@@ -34,7 +34,6 @@ def action_create
     databag = Chef::EncryptedDataBagItem.load('stud', new_resource.config_name)
   end
 
-  Chef::Log.warn new_resource
   if new_resource.pem
     pemContents = new_resource.pem
   else

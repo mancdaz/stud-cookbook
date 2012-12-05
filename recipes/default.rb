@@ -73,3 +73,10 @@ template '/etc/init/stud.conf' do
   mode '0644'
   source 'init/stud.conf.erb'
 end
+
+service 'stud' do
+  case node[:platform]
+  when 'ubuntu'
+    provider Chef::Provider::Service::Upstart
+  end
+end

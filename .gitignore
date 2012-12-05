@@ -8,6 +8,7 @@ Gemfile.lock
 .*.sw[a-z]
 *.un~
 /cookbooks
+VERSION
 
 # IDE Project settings
 .idea

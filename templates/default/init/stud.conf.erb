@@ -13,11 +13,10 @@ stop on runlevel [!2345]
 #umask 007
 
 script
-for configFile in /etc/stub/configs-enabled/*.conf
+for configFile in /etc/stud/configs-enabled/*.conf
 do
-   exec stub --config=$configFile
+   exec stud --config=$configFile
 done
 end script
 
-exec stub
 console output

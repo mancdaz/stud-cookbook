@@ -7,10 +7,8 @@ description "Stub Server"
 start on runlevel [2345]
 stop on runlevel [!2345]
 
-#respawn
-#respawn limit 10 5
-
-#umask 007
+respawn
+respawn limit 10 5
 
 script
 for configFile in /etc/stud/configs-enabled/*.conf

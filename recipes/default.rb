@@ -73,9 +73,3 @@ template '/etc/init/stud.conf' do
   mode '0644'
   source 'init/stud.conf.erb'
 end
-
-stud_instance 'chef-webui' do
-  source_port 4043
-  destination_port 4040
-  action :enable
-end

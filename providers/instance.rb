@@ -18,41 +18,47 @@
 
 action :enable do
 
-  create_command
+  action_create
 
-  link "/opt/stub/configs-available/#{new_resource.config_name}.conf" do
-    to "/opt/stub/configs-enabled/#{new_resource.config_name}.conf"
+  link "/opt/stud/configs-available/#{new_resource.config_name}.conf" do
+    to "/opt/stud/configs-enabled/#{new_resource.config_name}.conf"
   end
 
 end
 
-def create_command
+def action_create
 
-  databag = Chef::EncryptedDataBagItem.load('stub', new_resource.config_name)
+  if Chef::Config[:solo]
+    databag = data_bag_item('stud', new_resource.config_name)
+  else
+    databag = Chef::EncryptedDataBagItem.load('stud', new_resource.config_name)
+  end
 
-  if new_resource.exists('pem')
+  Chef::Log.warn new_resource
+
+  if new_resource.respond_to?('pem')
     pemContents = new_resource.pem
   else
 
-    unless new_resource.exists('key')
+    unless new_resource.respond_to?('key')
       new_resource.key = databag['key']
     end
 
-    unless new_resource.exists('certificate')
+    unless new_resource.respond_to?('certificate')
       new_resource.certificate = databag['certificate']
     end
 
     pemContents = "#{new_resource.certificate}\n#{new_resource.key}"
   end
 
-  template "/etc/stub/certs/#{new_resource.config_name}.pem" do
+  file "/etc/stud/certs/#{new_resource.config_name}.pem" do
     owner 'root'
     group 'root'
     mode '0644'
-    source pemContents
+    content pemContents
   end
 
-  template "/etc/stub/configs-available/#{new_resource.config_name}.conf" do
+  template "/etc/stud/configs-available/#{new_resource.config_name}.conf" do
     owner 'root'
     group 'root'
     mode '0644'

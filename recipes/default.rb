@@ -69,7 +69,12 @@ bash "build stud" do
   EOH
 end
 
-stub_instance 'test' do
+template '/etc/init/stud.conf' do
+  mode '0644'
+  source 'init/stud.conf.erb'
+end
+
+stud_instance 'test' do
   source_port 4043
   destination_port 4040
 end

@@ -1,12 +1,12 @@
 frontend = "[*]:<%= @source_port %>"
-backend = "[127.0.0.1]:8000"
+backend = "[<%= @destination_hostname %>]:<%= @destination_port %>"
 
 # SSL x509 certificate file. REQUIRED.
 # List multiple certs to use SNI. Certs are used in the order they
 # are listed; the last cert listed will be used if none of the others match
 #
 # type: string
-pem-file = ""
+pem-file = "/etc/stud/certs/<%= @config_name %>.pem"
 
 ssl = on
 
@@ -18,7 +18,7 @@ prefer-server-ciphers = off
 # Use specified SSL engine
 #
 # type: string
-ssl-engine = ""
+# ssl-engine = ""
 
 # Number of worker processes
 #

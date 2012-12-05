@@ -20,8 +20,8 @@ action :enable do
 
   action_create
 
-  link "/opt/stud/configs-available/#{new_resource.config_name}.conf" do
-    to "/opt/stud/configs-enabled/#{new_resource.config_name}.conf"
+  link "/etc/stud/configs-enabled/#{new_resource.config_name}.conf" do
+    to "/etc/stud/configs-available/#{new_resource.config_name}.conf"
   end
 
 end
@@ -35,20 +35,24 @@ def action_create
   end
 
   Chef::Log.warn new_resource
-
-  if new_resource.respond_to?('pem')
+  if new_resource.pem
     pemContents = new_resource.pem
   else
 
-    unless new_resource.respond_to?('key')
-      new_resource.key = databag['key']
+    if new_resource.certificate
+      pemContents = new_resource.certificate
+    else
+      pemContents = databag['certificate']
     end
 
-    unless new_resource.respond_to?('certificate')
-      new_resource.certificate = databag['certificate']
+    pemContents << "\n"
+
+    if new_resource.key
+      pemContents << new_resource.key
+    else
+      pemContents << databag['key']
     end
 
-    pemContents = "#{new_resource.certificate}\n#{new_resource.key}"
   end
 
   file "/etc/stud/certs/#{new_resource.config_name}.pem" do
@@ -66,7 +70,8 @@ def action_create
     variables({
       :source_port => new_resource.source_port,
       :destination_hostname => new_resource.destination_hostname,
-      :destination_port => new_resource.destination_port
+      :destination_port => new_resource.destination_port,
+      :config_name => new_resource.config_name
     })
   end
 

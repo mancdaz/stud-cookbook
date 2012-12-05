@@ -77,4 +77,5 @@ end
 stud_instance 'test' do
   source_port 4043
   destination_port 4040
+  action :enable
 end

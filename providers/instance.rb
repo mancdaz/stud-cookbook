@@ -28,6 +28,8 @@ end
 
 def action_create
 
+  new_resource.domain_name = new_resource.domain_name.sub(/\./, '')
+
   if Chef::Config[:solo]
     databag = data_bag_item('stud', new_resource.domain_name)
   else

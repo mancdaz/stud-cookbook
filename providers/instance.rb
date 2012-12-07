@@ -73,7 +73,7 @@ def action_create
       :source_port => new_resource.source_port,
       :destination_hostname => new_resource.destination_hostname,
       :destination_port => new_resource.destination_port,
-      :config_name => new_resource.config_name
+      :certificate_domain => certificate_domain
     })
   end
 

@@ -28,12 +28,12 @@ end
 
 def action_create
 
-  new_resource.domain_name = new_resource.domain_name.sub(/\./, '')
+  new_resource.domain_name = new_resource.certificate_domain.sub(/\./, '')
 
   if Chef::Config[:solo]
-    databag = data_bag_item('stud', new_resource.domain_name)
+    databag = data_bag_item('stud', new_resource.certificate_domain)
   else
-    databag = Chef::EncryptedDataBagItem.load('stud', new_resource.domain_name)
+    databag = Chef::EncryptedDataBagItem.load('stud', new_resource.certificate_domain)
   end
 
   if new_resource.pem
@@ -56,7 +56,7 @@ def action_create
 
   end
 
-  file "/etc/stud/certs/#{new_resource.domain_name}.pem" do
+  file "/etc/stud/certs/#{new_resource.certificate_domain}.pem" do
     owner 'root'
     group 'root'
     mode '0644'

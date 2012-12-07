@@ -32,3 +32,4 @@ attribute :destination_port
 attribute :key
 attribute :certificate
 attribute :pem
+attribute :certificate_domain

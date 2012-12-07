@@ -29,9 +29,9 @@ end
 def action_create
 
   if Chef::Config[:solo]
-    databag = data_bag_item('stud', new_resource.config_name)
+    databag = data_bag_item('stud', new_resource.domain_name)
   else
-    databag = Chef::EncryptedDataBagItem.load('stud', new_resource.config_name)
+    databag = Chef::EncryptedDataBagItem.load('stud', new_resource.domain_name)
   end
 
   if new_resource.pem
@@ -54,7 +54,7 @@ def action_create
 
   end
 
-  file "/etc/stud/certs/#{new_resource.config_name}.pem" do
+  file "/etc/stud/certs/#{new_resource.domain_name}.pem" do
     owner 'root'
     group 'root'
     mode '0644'

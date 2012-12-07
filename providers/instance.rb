@@ -28,7 +28,7 @@ end
 
 def action_create
 
-  new_resource.domain_name = new_resource.certificate_domain.sub(/\./, '')
+  new_resource.certificate_domain = new_resource.certificate_domain.sub(/\./, '')
 
   if Chef::Config[:solo]
     databag = data_bag_item('stud', new_resource.certificate_domain)

@@ -18,6 +18,7 @@
 #
 package 'libev-dev'
 package 'libssl-dev'
+package 'git'
 
 directory '/opt/stud/build' do
   mode '0755'

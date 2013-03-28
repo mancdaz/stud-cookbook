@@ -1,4 +1,4 @@
-frontend = "[*]:<%= @source_port %>"
+frontend = "[<%= @source_hostname %>]:<%= @source_port %>"
 backend = "[<%= @destination_hostname %>]:<%= @destination_port %>"
 
 # SSL x509 certificate file. REQUIRED.

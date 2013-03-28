@@ -27,9 +27,11 @@ end
 attribute :config_name, :name_attribute => true
 attribute :enabled, :default => true
 attribute :source_port
+attribute :source_hostname, :default => '*'
 attribute :destination_hostname, :default => '127.0.0.1'
 attribute :destination_port
 attribute :key
 attribute :certificate
 attribute :pem
 attribute :certificate_domain
+attribute :pemfile

@@ -28,6 +28,9 @@ end
 
 def action_create
 
+  
+  Chef::Log.info "certificate domain is #{new_resource.certificate_domain}"
+  Chef::Log.info "source_port is #{new_resource.source_port}"
   certificate_domain = new_resource.certificate_domain.sub(/\./, '')
 
   if Chef::Config[:solo]
@@ -38,8 +41,8 @@ def action_create
 
   if new_resource.pem
     pemContents = new_resource.pem
-  else
 
+  elsif
     if new_resource.certificate
       pemContents = new_resource.certificate
     else
@@ -54,6 +57,11 @@ def action_create
       pemContents << databag['key']
     end
 
+  else
+    if new_resource.pemfile
+      pemContents = File.read(new_resource.pemfile)
+    end
+
   end
 
   file "/etc/stud/certs/#{certificate_domain}.pem" do
@@ -63,14 +71,16 @@ def action_create
     content pemContents
   end
 
-  template "/etc/stud/configs-available/#{new_resource.config_name}.conf" do
+  template "/etc/stud/conf.d/#{new_resource.config_name}.conf" do
     cookbook 'stud'
     owner 'root'
     group 'root'
     mode '0644'
     source 'stud.conf.erb'
     variables({
+      :source_hostname => new_resource.source_hostname,
       :source_port => new_resource.source_port,
+      :destination_hostname => new_resource.destination_hostname,
       :destination_hostname => new_resource.destination_hostname,
       :destination_port => new_resource.destination_port,
       :certificate_domain => certificate_domain

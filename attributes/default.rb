@@ -17,4 +17,15 @@
 # limitations under the License.
 #
 
-
+case platform
+when "fedora", "redhat", "centos"
+  default["stud"]["platform"] = {
+    "stud_packages" => ["libev-devel", "git", "openssl-devel"],
+    "package_overrides" => ""
+}
+when "ubuntu"
+  default["stud"]["platform"] = {
+    "stud_packages" => ["libev-dev", "git", "libssl-dev"],
+    "package_overrides" => "-o Dpkg::Options::='--force-confold' -o Dpkg::Options::='--force-confdef'"
+}
+end

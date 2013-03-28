@@ -98,9 +98,9 @@ end
 
 stud_instance "mything" do
     pemfile "/tmp/apemfile.pem"
-    source_hostname = '127.0.0.1'
-    source_port = '4000'
-    destination_hostname = '127.0.0.1'
-    destination_port = '22'
-    certificate_domain = 'anameofadomain'
+    source_hostname '127.0.0.1'
+    source_port '4000'
+    destination_hostname '127.0.0.1'
+    destination_port '22'
+    certificate_domain 'anameofadomain'
 end

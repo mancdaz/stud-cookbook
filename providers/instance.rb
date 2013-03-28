@@ -28,39 +28,37 @@ end
 
 def action_create
 
-  
-  Chef::Log.info "certificate domain is #{new_resource.certificate_domain}"
-  Chef::Log.info "source_port is #{new_resource.source_port}"
   certificate_domain = new_resource.certificate_domain.sub(/\./, '')
 
-  if Chef::Config[:solo]
-    databag = data_bag_item('stud', certificate_domain)
-  else
-    databag = Chef::EncryptedDataBagItem.load('stud', certificate_domain)
-  end
+#  if Chef::Config[:solo]
+#    databag = data_bag_item('stud', certificate_domain)
+#  else
+#    databag = Chef::EncryptedDataBagItem.load('stud', certificate_domain)
+#  end
 
   if new_resource.pem
     pemContents = new_resource.pem
 
   elsif
+    if new_resource.pemfile
+      pemContents = ::File.read(new_resource.pemfile)
+    end
+
+  else
     if new_resource.certificate
       pemContents = new_resource.certificate
-    else
-      pemContents = databag['certificate']
+#    else
+#      pemContents = databag['certificate']
     end
 
     pemContents << "\n"
 
     if new_resource.key
       pemContents << new_resource.key
-    else
-      pemContents << databag['key']
+#    else
+#      pemContents << databag['key']
     end
 
-  else
-    if new_resource.pemfile
-      pemContents = File.read(new_resource.pemfile)
-    end
 
   end
 
